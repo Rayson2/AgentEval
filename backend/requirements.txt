@@ -1,0 +1,7 @@
+unicorn
+fastapi
+uvicorn 
+langchain 
+langchain-ollama 
+pydantic
+httpx

@@ -1,17 +1,23 @@
 from langchain_ollama import ChatOllama
 
-# MODEL_NAME = "qwen3:4b"
-MODEL_NAME = "qwen3:1.7b"
+from core.settings import (
+	LANGCHAIN_CONTEXT_SIZE,
+	LANGCHAIN_OUTPUT_TOKENS,
+	LLM_TEMPERATURE,
+	MODEL_NAME,
+	OLLAMA_KEEP_ALIVE,
+	OLLAMA_URL,
+)
 
 def get_llm():
     return ChatOllama(
         model=MODEL_NAME,
-        base_url="http://localhost:11434",
-        temperature=0.2,
+        base_url=OLLAMA_URL,
+        temperature=LLM_TEMPERATURE,
         reasoning=False,
-        num_ctx=2048,
-        num_predict=250,
-        keep_alive="5m",
+        num_ctx=LANGCHAIN_CONTEXT_SIZE,
+        num_predict=LANGCHAIN_OUTPUT_TOKENS,
+        keep_alive=OLLAMA_KEEP_ALIVE,
     )
 
 

@@ -4,6 +4,7 @@ import time
 from agents.crewai_agent import run_crewai_research
 from agents.autogen_agent import run_autogen_research
 from agents.langchain_agent import run_research
+from core.settings import MODEL_NAME
 
 
 async def execute_research(question: str):
@@ -19,7 +20,7 @@ async def execute_research(question: str):
     return {
         "success": bool(report.strip()),
         "framework": "LangChain",
-        "model": "qwen3:1.7b",
+        "model": MODEL_NAME,
         "question": question,
         "report": report,
         "execution_time": round(elapsed, 2),
@@ -40,7 +41,7 @@ async def execute_crewai_research(question: str):
     return {
         "success": bool(report.strip()),
         "framework": "CrewAI",
-        "model": "qwen3:1.7b",
+        "model": MODEL_NAME,
         "question": question,
         "report": report,
         "execution_time": round(elapsed, 2),
@@ -61,7 +62,7 @@ async def execute_autogen_research(question: str):
     return {
         "success": bool(report.strip()),
         "framework": "AutoGen",
-        "model": "qwen3:1.7b",
+        "model": MODEL_NAME,
         "question": question,
         "report": report,
         "execution_time": round(elapsed, 2),

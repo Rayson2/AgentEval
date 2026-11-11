@@ -4,8 +4,12 @@ import time
 from datetime import datetime
 from crewai.tools import tool
 from crewai_tools import SerperDevTool
-
-MAX_SEARCH_CALLS = 2
+from core.settings import (
+	MAX_SEARCH_CALLS,
+	SERPER_COUNTRY,
+	SERPER_LOCALE,
+	SERPER_RESULTS,
+)
 
 
 def requires_web_search(question: str) -> tuple[bool, str]:
@@ -75,9 +79,9 @@ class WebSearchSession:
 		self.search_count = 0
 		self.search_time = 0.0
 		self.serper = SerperDevTool(
-			n_results=2,
-			country="in",
-			locale="en-IN",
+			n_results=SERPER_RESULTS,
+			country=SERPER_COUNTRY,
+			locale=SERPER_LOCALE,
 		)
 
 		@tool("Bounded Serper Web Search")

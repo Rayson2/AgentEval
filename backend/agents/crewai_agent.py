@@ -1,16 +1,19 @@
 import time
 from dotenv import load_dotenv
 from crewai import Agent, Crew, LLM, Process, Task
+from core.settings import (
+    CONTEXT_WINDOW_SIZE,
+    LLM_TEMPERATURE,
+    MAX_OUTPUT_TOKENS,
+    MODEL_NAME,
+    OLLAMA_URL,
+)
 from tools.websearch_tool import WebSearchSession, requires_web_search
 load_dotenv()
 
 # ============================================================
 # CONFIGURATION
 # ============================================================
-
-MODEL_NAME = "qwen3:1.7b"
-OLLAMA_URL = "http://localhost:11434"
-MAX_OUTPUT_TOKENS = 1600
 
 # ============================================================
 # CREWAI RESEARCH FUNCTION
@@ -42,9 +45,9 @@ def run_crewai_research(question: str) -> str:
     llm = LLM(
         model=f"ollama/{MODEL_NAME}",
         base_url=OLLAMA_URL,
-        temperature=0.2,
+        temperature=LLM_TEMPERATURE,
         max_tokens=MAX_OUTPUT_TOKENS,
-        context_window_size=8192,
+        context_window_size=CONTEXT_WINDOW_SIZE,
     )
 
     # --------------------------------------------------------

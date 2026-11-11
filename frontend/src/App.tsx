@@ -141,7 +141,7 @@ function App() {
         <div className="brand-row">
           <div className="brand-mark"><Sparkles size={17} strokeWidth={2.5} /></div>
           <div>
-            <div className="brand-name">AGENT<span>/</span>LAB</div>
+            <div className="brand-name">AGENTEVAL</div>
             <div className="brand-subtitle">Research console</div>
           </div>
           <button className="icon-button mobile-close" onClick={() => setSidebarOpen(false)} aria-label="Close navigation"><X size={18} /></button>

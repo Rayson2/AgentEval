@@ -92,10 +92,26 @@ python -c "from autogen_ext.models.ollama import OllamaChatCompletionClient; pri
 Create a `.env` file inside the `backend/` directory:
 
 ```env
+MODEL_NAME=qwen3:1.7b
+OLLAMA_URL=http://localhost:11434
+LLM_TEMPERATURE=0.2
+MAX_OUTPUT_TOKENS=1600
+CONTEXT_WINDOW_SIZE=8192
+LANGCHAIN_CONTEXT_SIZE=2048
+LANGCHAIN_OUTPUT_TOKENS=250
+OLLAMA_KEEP_ALIVE=5m
+MAX_SEARCH_CALLS=2
+SERPER_RESULTS=2
+SERPER_COUNTRY=in
+SERPER_LOCALE=en-IN
 SERPER_API_KEY=your_serper_api_key
 ```
 
 Replace the placeholder with your actual API key.
+
+All model, Ollama, generation, and web-search settings are read from this
+file. The backend provides the same values as defaults when a setting is not
+defined.
 
 Do not commit `.env` or expose your API key in source code. Ensure it is included in `.gitignore`.
 

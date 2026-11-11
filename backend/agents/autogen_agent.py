@@ -6,14 +6,17 @@ from autogen_agentchat.agents import AssistantAgent
 from autogen_ext.models.ollama import OllamaChatCompletionClient
 from dotenv import load_dotenv
 
+from core.settings import (
+    CONTEXT_WINDOW_SIZE,
+    LLM_TEMPERATURE,
+    MAX_OUTPUT_TOKENS,
+    MODEL_NAME,
+    OLLAMA_URL,
+)
 from tools.research_tools import read_document, search_documents
 from tools.websearch_tool import WebSearchSession
 
 load_dotenv()
-
-MODEL_NAME = "qwen3:1.7b"
-OLLAMA_URL = "http://localhost:11434"
-MAX_OUTPUT_TOKENS = 1600
 
 SYSTEM_MESSAGE = """
 You are an academic research assistant.
@@ -70,9 +73,9 @@ async def _run_autogen_research(question: str) -> str:
             "family": "unknown",
         },
         options={
-            "temperature": 0.2,
+            "temperature": LLM_TEMPERATURE,
             "num_predict": MAX_OUTPUT_TOKENS,
-            "num_ctx": 8192,
+            "num_ctx": CONTEXT_WINDOW_SIZE,
         },
     )
 

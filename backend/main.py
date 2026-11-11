@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from core.settings import MODEL_NAME, OLLAMA_URL
 from schemas.research import ResearchRequest, ResearchResponse
 from services.research_service import (
     execute_autogen_research,
@@ -45,7 +46,7 @@ async def root():
         "application": "Local Agent Research API",
         "status": "running",
         "framework": "LangChain",
-        "model": "qwen3:1.7b"
+        "model": MODEL_NAME
     }
 
 
@@ -55,14 +56,14 @@ async def health():
     try:
         async with httpx.AsyncClient(timeout=2.0) as client:
             response = await client.get(
-                "http://localhost:11434/api/tags"
+                f"{OLLAMA_URL}/api/tags"
             )
             response.raise_for_status()
 
         return {
             "status": "healthy",
             "framework": "LangChain",
-            "model": "qwen3:1.7b",
+            "model": MODEL_NAME,
             "ollama": "connected"
         }
 
@@ -70,7 +71,7 @@ async def health():
         return {
             "status": "degraded",
             "framework": "LangChain",
-            "model": "qwen3:1.7b",
+            "model": MODEL_NAME,
             "ollama": "disconnected"
         }
 

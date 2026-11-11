@@ -5,7 +5,7 @@ from agents.langchain_agent import run_research
 if __name__ == "__main__":
 
     question = """
-    Explain how fuzzy logic can be used for autonomous rover navigation.
+    bilaspu, chattisgarh, india weather
     """
 
     print("\nStarting Fast LangChain Research Agent...\n")

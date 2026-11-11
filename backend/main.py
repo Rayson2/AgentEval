@@ -4,7 +4,11 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from schemas.research import ResearchRequest, ResearchResponse
-from services.research_service import execute_research
+from services.research_service import (
+    execute_autogen_research,
+    execute_crewai_research,
+    execute_research,
+)
 
 
 # Application lifespan
@@ -73,11 +77,11 @@ async def health():
 
 # Research endpoint
 @app.post(
-    "/api/research/run",
+    "/api/research/langchain",
     response_model=ResearchResponse,
     tags=["Research"]
 )
-async def run_research_endpoint(request: ResearchRequest):
+async def run_langchain_research_endpoint(request: ResearchRequest):
 
     try:
         result = await execute_research(request.question)
@@ -95,4 +99,56 @@ async def run_research_endpoint(request: ResearchRequest):
         raise HTTPException(
             status_code=500,
             detail="Research execution failed."
+        )
+
+
+@app.post(
+    "/api/research/crewai",
+    response_model=ResearchResponse,
+    tags=["Research"]
+)
+async def run_crewai_research_endpoint(request: ResearchRequest):
+
+    try:
+        result = await execute_crewai_research(request.question)
+        return result
+
+    except TimeoutError:
+        raise HTTPException(
+            status_code=504,
+            detail="Research exceeded the 25-second execution deadline."
+        )
+
+    except Exception as error:
+        print("CrewAI research API error:", repr(error))
+
+        raise HTTPException(
+            status_code=500,
+            detail="CrewAI research execution failed."
+        )
+
+
+@app.post(
+    "/api/research/autogen",
+    response_model=ResearchResponse,
+    tags=["Research"]
+)
+async def run_autogen_research_endpoint(request: ResearchRequest):
+
+    try:
+        result = await execute_autogen_research(request.question)
+        return result
+
+    except TimeoutError:
+        raise HTTPException(
+            status_code=504,
+            detail="Research exceeded the 25-second execution deadline."
+        )
+
+    except Exception as error:
+        print("AutoGen research API error:", repr(error))
+
+        raise HTTPException(
+            status_code=500,
+            detail="AutoGen research execution failed."
         )

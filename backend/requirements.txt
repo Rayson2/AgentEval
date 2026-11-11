@@ -1,7 +1,10 @@
-unicorn
+uvicorn
 fastapi
-uvicorn 
+uv
 langchain 
 langchain-ollama 
 pydantic
 httpx
+python-dotenv
+autogen-agentchat
+autogen-ext[ollama]

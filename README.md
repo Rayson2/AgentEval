@@ -111,6 +111,19 @@ The API is available at:
 - API: http://localhost:8000
 - Swagger documentation: http://localhost:8000/docs
 
+### 7. Start the React frontend
+
+In a second terminal, install the frontend dependencies and start Vite:
+
+```bash
+cd frontend
+bun install
+bun run dev
+```
+
+The research console is available at http://localhost:5173. During development,
+Vite proxies `/api` requests to the FastAPI server at `http://localhost:8000`.
+
 ## API
 
 ### Health check
@@ -173,6 +186,11 @@ agenteval/
 │   ├── requirements.txt
 │   └── main.py
 ├── frontend/
+│   ├── src/
+│   │   ├── App.tsx
+│   │   └── styles.css
+│   ├── package.json
+│   └── vite.config.ts
 └── README.md
 ```
 
@@ -189,6 +207,13 @@ Run the API from the backend directory:
 ```bash
 cd backend
 uvicorn main:app --reload
+```
+
+Build the frontend for production with:
+
+```bash
+cd frontend
+bun run build
 ```
 
 
